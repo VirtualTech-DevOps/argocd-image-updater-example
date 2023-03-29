@@ -37,4 +37,6 @@ jobs:
         with:
           context: ./app
           push: true
-          tags: ${{ vars.repository_url }}:${{ steps.sha.outputs.short }}
+          tags: |
+            ${{ vars.repository_url }}:${{ github.ref_name }}
+            ${{ vars.repository_url }}:${{ steps.sha.outputs.short }}
