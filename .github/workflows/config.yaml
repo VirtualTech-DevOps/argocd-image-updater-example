@@ -28,9 +28,12 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
         id: login-ecr
 
+      - run: echo ${{ github.sha }} | cut -c1-7 | xargs printf 'short="%s"\n' >> "$GITHUB_OUPUT"
+        id: sha
+
       - name: Build and push Docker images
         uses: docker/build-push-action@v4
         with:
           context: ./app
           push: true
-          tags: ${{ steps.login-ecr.outputs.registry }}:${GITHUB_SHA:7}
+          tags: ${{ steps.login-ecr.outputs.registry }}:${{ steps.sha.outputs.short }
