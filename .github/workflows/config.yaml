@@ -1,0 +1,31 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Setup QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Configure AWS Credentials For GitHub Actions
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.role_to_assume }}
+          aws-region: ${{ secrets.aws_region }}
+
+      - name: Amazon ECR "Login" Action for GitHub Actions
+        uses: aws-actions/amazon-ecr-login@v1
+        id: login-ecr
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v4
+        with:
+          context: ./app
+          push: true
+          tags: ${{ steps.login-ecr.outputs.registry }}:${GITHUB_SHA:7}
