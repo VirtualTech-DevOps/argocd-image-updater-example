@@ -36,4 +36,4 @@ jobs:
         with:
           context: ./app
           push: true
-          tags: ${{ steps.login-ecr.outputs.registry }}:${{ steps.sha.outputs.short }
+          tags: ${{ steps.login-ecr.outputs.registry }}:${{ steps.sha.outputs.short }}
