@@ -19,13 +19,11 @@ jobs:
       - name: Docker Setup Buildx
         uses: docker/setup-buildx-action@v2
 
-      - run: echo ${{ vars.ROLE_TO_ASSUME }} ${{ vars.AWS_REGION }}
-
       - name: Configure AWS Credentials For GitHub Actions
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: ${{ vars.ROLE_TO_ASSUME }}
-          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.role_to_assume }}
+          aws-region: ${{ vars.aws_region }}
 
       - name: Amazon ECR "Login" Action for GitHub Actions
         uses: aws-actions/amazon-ecr-login@v1
@@ -39,4 +37,4 @@ jobs:
         with:
           context: ./app
           push: true
-          tags: ${{ steps.login-ecr.outputs.registry }}:${{ steps.sha.outputs.short }}
+          tags: ${{ var.repository_url }}:${{ steps.sha.outputs.short }}
