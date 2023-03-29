@@ -28,7 +28,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
         id: login-ecr
 
-      - run: echo ${{ github.sha }} | cut -c1-7 | xargs printf 'short="%s"\n' >> "$GITHUB_OUPUT"
+      - run: echo ${{ github.sha }} | cut -c1-7 | xargs printf 'short="%s"\n' >> "$GITHUB_OUTPUT"
         id: sha
 
       - name: Build and push Docker images
