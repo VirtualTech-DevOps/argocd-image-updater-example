@@ -1,0 +1,6 @@
+awscli 2.11.11
+eksctl 0.136.0
+github-cli 2.27.0
+helm 3.11.2
+kubectl 1.24.12
+terraform 1.4.0
